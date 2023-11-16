@@ -1,10 +1,12 @@
 import Customer from '@domain/customer/entity/customer';
 import CustomerRepositoryInterface from '@domain/customer/repository/customer-repsitory.interface';
 import Address from '@domain/customer/value-object/address';
-import { PrismaClient } from '@prisma/client';
+import { Injectable } from '@nestjs/common';
+import { PrismaRepository } from './prisma-provider';
 
+@Injectable()
 export class PismaCustomerRepository implements CustomerRepositoryInterface {
-  constructor(private readonly prisma: PrismaClient) {}
+  constructor(private readonly prisma: PrismaRepository) {}
 
   async create(entity: Customer): Promise<void> {
     await this.prisma.customer.create({
@@ -22,9 +24,7 @@ export class PismaCustomerRepository implements CustomerRepositoryInterface {
 
   async find(id: string): Promise<Customer> {
     const customerModel = await this.prisma.customer.findUnique({
-      where: {
-        id,
-      },
+      where: { id },
     });
 
     if (!customerModel) {
