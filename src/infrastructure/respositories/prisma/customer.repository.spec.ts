@@ -7,18 +7,15 @@ import { MockFunctionMetadata, ModuleMocker } from 'jest-mock';
 import { PismaCustomerRepository } from './prisma-customer-repository';
 import { PrismaRepository } from './prisma-provider';
 
-const fakeCustomer = [
-  {
-    name: faker.person.fullName(),
-    email: faker.internet.email(),
+const fakeCustomer = {
+  name: faker.person.fullName(),
+  email: faker.internet.email(),
 
-    street: 'Quanda 50',
-    number: '14A',
-    zipcode: '67040560',
-    city: 'Ananindeua',
-  },
-];
-
+  street: 'Quanda 50',
+  number: '14A',
+  zipcode: '67040560',
+  city: 'Ananindeua',
+};
 const moduleMocker = new ModuleMocker(global);
 
 describe('Customer repository test', () => {
@@ -49,8 +46,8 @@ describe('Customer repository test', () => {
     const address = new Address('Street', '1', '13330-250', 'São Paulo');
 
     const customer = CustomerFactory.createWithAddress(
-      fakeCustomer[0].name,
-      fakeCustomer[0].email,
+      fakeCustomer.name,
+      fakeCustomer.email,
       address,
     );
 
@@ -58,7 +55,7 @@ describe('Customer repository test', () => {
 
     const response = await prisma.find(customer.id);
 
-    expect(response.email).toBe(fakeCustomer[0].email);
+    expect(response.email).toBe(fakeCustomer.email);
   });
 
   it('should findAll customer', async () => {
@@ -71,14 +68,14 @@ describe('Customer repository test', () => {
     const address = new Address('Street', '1', '13330-250', 'São Paulo');
 
     const customer = CustomerFactory.createWithAddress(
-      fakeCustomer[0].name,
+      fakeCustomer.name,
       faker.internet.email(),
       address,
     );
 
     await prisma.create(customer);
-    const response = await prisma.findByEmail(fakeCustomer[0].email);
+    const response = await prisma.findByEmail(fakeCustomer.email);
 
-    expect(response.email).toBe(fakeCustomer[0].email);
+    expect(response.email).toBe(fakeCustomer.email);
   });
 });

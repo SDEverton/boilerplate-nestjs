@@ -2,6 +2,7 @@ import { CreateCustomerDto } from '@application/customer/dto/create-customer.dto
 import { FindCustomerDto } from '@application/customer/dto/find-customer.dto';
 import { PismaCustomerRepository } from '@infrastructure/respositories/prisma/prisma-customer-repository';
 import { Injectable } from '@nestjs/common';
+import Customer from '../entity/customer';
 import CustomerFactory from '../factory/customer.factory';
 import Address from '../value-object/address';
 
@@ -56,5 +57,11 @@ export class CustomerService {
         city: customer.Address.city,
       },
     };
+  }
+
+  async findAll(): Promise<Customer[]> {
+    const customers = await this.repository.findAll();
+
+    return customers;
   }
 }
