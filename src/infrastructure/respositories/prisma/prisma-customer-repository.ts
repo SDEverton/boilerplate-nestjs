@@ -41,4 +41,37 @@ export class PismaCustomerRepository implements CustomerRepositoryInterface {
     customer.changeAddress(address);
     return customer;
   }
+
+  async findByEmail(email: string): Promise<Customer> {
+    const customerModel = await this.prisma.customer.findUnique({
+      where: { email },
+    });
+
+    if (!customerModel) {
+      throw new Error('Customer not found');
+    }
+
+    const customer = new Customer(
+      customerModel.id,
+      customerModel.name,
+      customerModel.email,
+    );
+    const address = new Address(
+      customerModel.street,
+      customerModel.number,
+      customerModel.zipcode,
+      customerModel.city,
+    );
+    customer.changeAddress(address);
+    return customer;
+  }
+
+  async findAll(): Promise<Customer[]> {
+    const customersModel = await this.prisma.customer.findMany();
+    const customers = customersModel.map(
+      (customerModel) =>
+        new Customer(customerModel.id, customerModel.name, customerModel.email),
+    );
+    return customers;
+  }
 }

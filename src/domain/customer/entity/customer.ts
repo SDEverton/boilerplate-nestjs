@@ -2,7 +2,7 @@ import Address from '../value-object/address';
 
 export default class Customer {
   private _id: string;
-  private _name: string = '';
+  private _name: string;
   private _email: string = '';
   private _address!: Address;
 

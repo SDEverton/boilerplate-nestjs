@@ -42,4 +42,19 @@ export class CustomerService {
       },
     };
   }
+
+  async findByEmail(email: string): Promise<FindCustomerDto> {
+    const customer = await this.repository.findByEmail(email);
+    return {
+      id: customer.id,
+      name: customer.name,
+      email: customer.email,
+      address: {
+        street: customer.Address.street,
+        number: customer.Address.number,
+        zip: customer.Address.zip,
+        city: customer.Address.city,
+      },
+    };
+  }
 }
