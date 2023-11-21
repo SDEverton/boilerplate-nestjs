@@ -6,8 +6,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Boilerplate Renault')
-    .setDescription('The api for base for Renault')
+    .setTitle('Boilerplate NestJS with: Swagger, Prisma, DDD, SOLID, TDD.')
+    .setDescription('The api for base for Projects')
     .setVersion('1.0')
     .build();
 
